@@ -147,6 +147,14 @@ export default function App() {
     }
   }, [tasks.length, activeTab]);
 
+  // Auto-resize textarea
+  useEffect(() => {
+      if (promptInputRef.current) {
+          promptInputRef.current.style.height = 'auto';
+          promptInputRef.current.style.height = `${Math.min(promptInputRef.current.scrollHeight, 208)}px`;
+      }
+  }, [prompt]);
+
   const loadGallery = async () => {
     const images = await getGallery();
     setGallery(images);
@@ -831,14 +839,8 @@ export default function App() {
                             }}
                             onPaste={handlePaste}
                             placeholder={referenceImages.length > 0 ? "Describe changes to images..." : "Imagine something amazing..."}
-                            className="flex-1 bg-transparent text-gray-200 placeholder:text-gray-600 text-sm p-3 focus:outline-none resize-none max-h-32 min-h-[44px] py-3 leading-relaxed scrollbar-none"
-                            style={{ height: 'auto' }}
+                            className="flex-1 bg-transparent text-gray-200 placeholder:text-gray-600 text-sm p-3 focus:outline-none resize-none max-h-[208px] min-h-[44px] py-3 leading-relaxed scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
                             rows={1}
-                            onInput={(e) => {
-                                const target = e.target as HTMLTextAreaElement;
-                                target.style.height = 'auto';
-                                target.style.height = `${Math.min(target.scrollHeight, 128)}px`;
-                            }}
                         />
 
                         {/* Right: Actions */}
