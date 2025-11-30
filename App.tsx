@@ -602,8 +602,8 @@ export default function App() {
                             <span className="text-6xl select-none drop-shadow-[0_0_15px_rgba(255,127,80,0.5)] filter-none opacity-100">🍑</span>
                         </div>
                         <div className="text-center space-y-3">
-                            <h3 className="text-2xl font-semibold text-gray-300">Batch Generate • Multi-Ratio • Style Transfer</h3>
-                            <p className="text-sm max-w-sm text-gray-500 mx-auto">Select a style, adjust settings, and type a prompt to generate your vision.</p>
+                            <h3 className="text-2xl font-semibold text-gray-300">Batch Generate • Multi-Ratio</h3>
+                            <p className="text-sm max-w-sm text-gray-500 mx-auto">make Nano feel Giga</p>
                         </div>
                     </div>
                 )}
