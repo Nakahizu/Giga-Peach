@@ -102,6 +102,11 @@ export default function App() {
     const savedBaseUrl = localStorage.getItem('gp_base_url');
     if (savedKey) setApiKey(savedKey);
     if (savedBaseUrl) setBaseUrl(savedBaseUrl);
+    
+    // Default closed on mobile
+    if (window.innerWidth < 768) {
+        setShowConfig(false);
+    }
 
     initDB().then(async () => {
       // 1. Migrate/Update Default Preset
@@ -151,7 +156,8 @@ export default function App() {
   useEffect(() => {
       if (promptInputRef.current) {
           promptInputRef.current.style.height = 'auto';
-          promptInputRef.current.style.height = `${Math.min(promptInputRef.current.scrollHeight, 208)}px`;
+          // Let CSS max-height handle the scrolling limit
+          promptInputRef.current.style.height = `${promptInputRef.current.scrollHeight}px`;
       }
   }, [prompt]);
 
@@ -458,7 +464,7 @@ export default function App() {
   return (
     <div className="flex flex-col h-screen bg-black text-gray-100 font-sans selection:bg-peach-500/30">
       {/* --- Header --- */}
-      <header className="flex items-center justify-between px-6 py-4 fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-[2px] pointer-events-none">
+      <header className="flex items-center justify-between px-4 md:px-6 py-4 fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-[2px] pointer-events-none">
         <div 
             onClick={() => setActiveTab('create')}
             className="flex items-center gap-3 pointer-events-auto cursor-pointer group select-none"
@@ -474,7 +480,7 @@ export default function App() {
             </div>
         </div>
         
-        <div className="flex items-center gap-3 pointer-events-auto">
+        <div className="flex items-center gap-2 md:gap-3 pointer-events-auto">
              {/* Social Links (Subtle) & Badges */}
              <div className="hidden md:flex items-center gap-3 mr-2">
                  {/* Open Source Badge */}
@@ -512,20 +518,20 @@ export default function App() {
                 <Key size={14} />
             </button>
 
-            <div className="h-6 w-px bg-gray-800 mx-1"></div>
+            <div className="hidden md:block h-6 w-px bg-gray-800 mx-1"></div>
 
             <div className="flex bg-gray-900/80 backdrop-blur rounded-lg p-1 border border-gray-800 shadow-lg">
                 <button 
                     onClick={() => setActiveTab('create')}
-                    className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'create' ? 'bg-gray-800 text-white shadow-sm ring-1 ring-gray-700' : 'text-gray-400 hover:text-gray-200'}`}
+                    className={`px-3 md:px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'create' ? 'bg-gray-800 text-white shadow-sm ring-1 ring-gray-700' : 'text-gray-400 hover:text-gray-200'}`}
                 >
-                    <span className="flex items-center gap-2"><Sparkles size={16}/> Create</span>
+                    <span className="flex items-center gap-2"><Sparkles size={16}/> <span className="hidden sm:inline">Create</span></span>
                 </button>
                 <button 
                     onClick={() => { setActiveTab('gallery'); loadGallery(); }}
-                    className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'gallery' ? 'bg-gray-800 text-white shadow-sm ring-1 ring-gray-700' : 'text-gray-400 hover:text-gray-200'}`}
+                    className={`px-3 md:px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'gallery' ? 'bg-gray-800 text-white shadow-sm ring-1 ring-gray-700' : 'text-gray-400 hover:text-gray-200'}`}
                 >
-                    <span className="flex items-center gap-2"><History size={16}/> Gallery</span>
+                    <span className="flex items-center gap-2"><History size={16}/> <span className="hidden sm:inline">Gallery</span></span>
                 </button>
             </div>
         </div>
@@ -659,7 +665,7 @@ export default function App() {
                 {/* 1. Settings Tray (Collapsible) */}
                 <div 
                     className={`w-full bg-gray-900/95 backdrop-blur-xl border border-gray-800 rounded-2xl mb-2 overflow-hidden transition-all duration-300 ease-out origin-bottom shadow-2xl ${
-                        showConfig ? 'max-h-[400px] opacity-100 scale-100' : 'max-h-0 opacity-0 scale-95'
+                        showConfig ? 'max-h-[500px] opacity-100 scale-100' : 'max-h-0 opacity-0 scale-95'
                     }`}
                 >
                     <div className="p-4 space-y-4">
@@ -769,7 +775,7 @@ export default function App() {
                 </div>
 
                 {/* 3. Main Input Bar */}
-                <div className="w-full bg-black/80 backdrop-blur-xl border border-gray-800 rounded-[2rem] shadow-2xl flex flex-col p-1.5 gap-0 relative ring-1 ring-white/5">
+                <div className="w-full bg-black/80 backdrop-blur-xl border border-gray-800 rounded-3xl md:rounded-[2rem] shadow-2xl flex flex-col p-2 md:p-1.5 gap-0 relative ring-1 ring-white/5">
                     
                     {/* Top: Uploaded Images Strip */}
                     {referenceImages.length > 0 && (
@@ -796,35 +802,16 @@ export default function App() {
                         </div>
                     )}
 
-                    <div className="flex items-end gap-2 w-full">
-                         {/* Left: Image Upload Trigger */}
-                        <div className="relative flex-shrink-0 self-end mb-0.5 ml-0.5">
-                            <input 
-                                type="file" 
-                                ref={fileInputRef}
-                                className="hidden" 
-                                accept="image/*"
-                                multiple
-                                onChange={(e) => handleFileChange(e, false)}
-                            />
-                            <button
-                                onClick={() => fileInputRef.current?.click()}
-                                disabled={referenceImages.length >= 6}
-                                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all overflow-hidden border ${
-                                    referenceImages.length > 0
-                                    ? 'bg-peach-900/20 border-peach-500 text-peach-500' 
-                                    : 'bg-gray-800 hover:bg-gray-700 border-transparent text-gray-400 hover:text-white'
-                                }`}
-                                title={referenceImages.length >= 6 ? "Max 6 images" : "Add Reference Image"}
-                            >
-                                <ImageIcon size={20} />
-                            </button>
-                            {referenceImages.length > 0 && (
-                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-peach-500 text-black text-[9px] font-bold rounded-full flex items-center justify-center">
-                                    {referenceImages.length}
-                                </div>
-                            )}
-                        </div>
+                    <div className="flex flex-col md:flex-row md:items-end gap-2 w-full">
+                         
+                        <input 
+                            type="file" 
+                            ref={fileInputRef}
+                            className="hidden" 
+                            accept="image/*"
+                            multiple
+                            onChange={(e) => handleFileChange(e, false)}
+                        />
 
                         {/* Center: Text Input */}
                         <textarea 
@@ -838,48 +825,73 @@ export default function App() {
                                 }
                             }}
                             onPaste={handlePaste}
-                            placeholder={referenceImages.length > 0 ? "Describe changes to images..." : "Imagine something amazing..."}
-                            className="flex-1 bg-transparent text-gray-200 placeholder:text-gray-600 text-sm p-3 focus:outline-none resize-none max-h-[208px] min-h-[44px] py-3 leading-relaxed scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
+                            placeholder={referenceImages.length > 0 ? "Describe changes..." : "Imagine..."}
+                            className="order-1 md:order-2 flex-1 w-full bg-transparent text-gray-200 placeholder:text-gray-600 text-sm p-2 md:p-3 focus:outline-none resize-none min-h-[40px] md:min-h-[44px] max-h-[100px] md:max-h-[208px] py-3 leading-relaxed scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
                             rows={1}
                         />
 
-                        {/* Right: Actions */}
-                        <div className="flex items-center gap-1 self-end mb-0.5 mr-0.5">
-                            {/* Config Summary */}
-                            {!showConfig && (
-                                <button 
-                                    onClick={() => setShowConfig(true)}
-                                    className="hidden sm:flex items-center gap-2 mr-2 px-3 py-1.5 rounded-full bg-gray-800/50 hover:bg-gray-800 border border-transparent hover:border-gray-700 transition-all text-xs text-gray-400 hover:text-gray-200"
+                        {/* Wrapper for Bottom/Side Controls */}
+                        <div className="order-2 md:contents flex justify-between items-center w-full mt-1 md:mt-0">
+                            
+                            {/* Left: Image Upload Trigger */}
+                            <div className="md:order-1 relative flex-shrink-0 mb-0.5 ml-0.5">
+                                <button
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={referenceImages.length >= 6}
+                                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all overflow-hidden border ${
+                                        referenceImages.length > 0
+                                        ? 'bg-peach-900/20 border-peach-500 text-peach-500' 
+                                        : 'bg-gray-800 hover:bg-gray-700 border-transparent text-gray-400 hover:text-white'
+                                    }`}
+                                    title={referenceImages.length >= 6 ? "Max 6 images" : "Add Reference Image"}
                                 >
-                                    <span className="font-medium text-peach-500/80">{params.aspectRatios.length > 2 ? `${params.aspectRatios.length} Ratios` : params.aspectRatios.join(', ')}</span>
-                                    <span className="w-px h-3 bg-gray-700"></span>
-                                    <span>{params.resolution}</span>
-                                    <span className="w-px h-3 bg-gray-700"></span>
-                                    <span>{params.count}</span>
+                                    <ImageIcon size={20} />
                                 </button>
-                            )}
+                                {referenceImages.length > 0 && (
+                                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-peach-500 text-black text-[9px] font-bold rounded-full flex items-center justify-center">
+                                        {referenceImages.length}
+                                    </div>
+                                )}
+                            </div>
 
-                            {/* Config Toggle */}
-                            <button
-                                onClick={() => setShowConfig(!showConfig)}
-                                className={`w-9 h-9 rounded-full flex items-center justify-center transition-all border ${
-                                    showConfig 
-                                    ? 'bg-gray-800 text-peach-400 border-gray-700' 
-                                    : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/50 border-transparent'
-                                }`}
-                                title="Settings"
-                            >
-                                <SlidersHorizontal size={18} />
-                            </button>
+                            {/* Right: Actions */}
+                            <div className="md:order-3 flex items-center gap-1 md:gap-2 mb-0.5 mr-0.5">
+                                {/* Config Summary */}
+                                {!showConfig && (
+                                    <button 
+                                        onClick={() => setShowConfig(true)}
+                                        className="flex items-center gap-2 mr-2 px-3 py-1.5 rounded-full bg-gray-800/50 hover:bg-gray-800 border border-transparent hover:border-gray-700 transition-all text-xs text-gray-400 hover:text-gray-200 overflow-hidden max-w-[150px] md:max-w-none whitespace-nowrap"
+                                    >
+                                        <span className="font-medium text-peach-500/80 truncate">{params.aspectRatios.length > 2 ? `${params.aspectRatios.length} Ratios` : params.aspectRatios.join(', ')}</span>
+                                        <span className="w-px h-3 bg-gray-700 flex-shrink-0"></span>
+                                        <span className="flex-shrink-0">{params.resolution}</span>
+                                        <span className="w-px h-3 bg-gray-700 flex-shrink-0"></span>
+                                        <span className="flex-shrink-0">{params.count}</span>
+                                    </button>
+                                )}
 
-                            {/* Generate Button */}
-                            <button 
-                                onClick={() => handleGenerate()}
-                                className="h-10 px-4 rounded-full bg-gradient-to-r from-peach-600 to-peach-500 text-white font-semibold flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-peach-900/20"
-                            >
-                                <span>Run</span>
-                                <Sparkles size={16} fill="currentColor" />
-                            </button>
+                                {/* Config Toggle */}
+                                <button
+                                    onClick={() => setShowConfig(!showConfig)}
+                                    className={`w-9 h-9 rounded-full flex items-center justify-center transition-all border ${
+                                        showConfig 
+                                        ? 'bg-gray-800 text-peach-400 border-gray-700' 
+                                        : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/50 border-transparent'
+                                    }`}
+                                    title="Settings"
+                                >
+                                    <SlidersHorizontal size={18} />
+                                </button>
+
+                                {/* Generate Button */}
+                                <button 
+                                    onClick={() => handleGenerate()}
+                                    className="h-10 px-4 rounded-full bg-gradient-to-r from-peach-600 to-peach-500 text-white font-semibold flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-peach-900/20"
+                                >
+                                    <span className="hidden sm:inline">Run</span>
+                                    <Sparkles size={16} fill="currentColor" />
+                                </button>
+                            </div>
                         </div>
                     </div>
 
