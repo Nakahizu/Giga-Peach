@@ -2,6 +2,8 @@
 
 **Best Suite for Nano Banana (Gemini 3 Pro Image Preview)**
 
+![Open Source](https://img.shields.io/badge/Open%20Source-MIT-green?style=flat-square)
+
 Giga Peach is a professional-grade, multi-modal AI image generation tool designed to unlock the full potential of Google's **gemini-3-pro-image-preview** model. It offers a powerful, local-first experience for creative professionals.
 
 ## Features
@@ -24,9 +26,13 @@ Giga Peach is a professional-grade, multi-modal AI image generation tool designe
 
 ## Technologies
 
-- **Frontend**: React 19, Tailwind CSS, Lucide Icons
-- **AI SDK**: Google GenAI SDK
+- **Frontend**: React 18, Tailwind CSS, Lucide Icons
+- **AI Integration**: Native Fetch API (No heavy SDK dependencies)
 - **Storage**: IndexedDB (Dexie-like implementation)
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ## Credits
 

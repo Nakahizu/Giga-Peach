@@ -451,12 +451,15 @@ export default function App() {
     <div className="flex flex-col h-screen bg-black text-gray-100 font-sans selection:bg-peach-500/30">
       {/* --- Header --- */}
       <header className="flex items-center justify-between px-6 py-4 fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-[2px] pointer-events-none">
-        <div className="flex items-center gap-3 pointer-events-auto">
-            <div className="flex items-center justify-center drop-shadow-[0_0_8px_rgba(255,127,80,0.3)] select-none">
+        <div 
+            onClick={() => setActiveTab('create')}
+            className="flex items-center gap-3 pointer-events-auto cursor-pointer group select-none"
+        >
+            <div className="flex items-center justify-center drop-shadow-[0_0_8px_rgba(255,127,80,0.3)] transition-transform group-hover:scale-110 duration-300">
                 <span className="text-3xl leading-none">🍑</span>
             </div>
             <div>
-                <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-peach-400 to-white leading-none">
+                <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-peach-400 to-white leading-none transition-all group-hover:text-peach-200">
                     Giga Peach
                 </h1>
                 <p className="text-[10px] text-gray-500 font-medium tracking-wide mt-0.5">Best Suite for Nano Banana</p>
@@ -464,8 +467,21 @@ export default function App() {
         </div>
         
         <div className="flex items-center gap-3 pointer-events-auto">
-             {/* Social Links (Subtle) */}
+             {/* Social Links (Subtle) & Badges */}
              <div className="hidden md:flex items-center gap-3 mr-2">
+                 {/* Open Source Badge */}
+                <a 
+                    href="https://github.com/CocoSgt/Giga-Peach" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-gray-900/50 border border-gray-700/50 text-[10px] font-medium text-gray-400 hover:text-white hover:border-peach-500/50 transition-all group"
+                >
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.4)]"></div>
+                    <span className="group-hover:text-gray-200">Open Source</span>
+                </a>
+
+                <div className="h-4 w-px bg-gray-800 mx-1"></div>
+
                 <a href="https://x.com/CocoSgt_twt" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-peach-400 transition-colors">
                     <Twitter size={16} />
                 </a>
